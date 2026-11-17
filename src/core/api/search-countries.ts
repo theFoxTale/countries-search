@@ -2,9 +2,9 @@ import { z } from 'zod';
 import { RawCountrySchema } from './schemas';
 
 import { HttpError } from './http-error.ts';
-import { mapCountryResponse } from './map-country-response.ts';
+import { mapCountryResponse } from '../model/map-country-response.ts';
 
-import type { Country } from './types';
+import type { Country } from '../model/types.ts';
 
 const BASE_URL = 'https://countries.dev/name';
 

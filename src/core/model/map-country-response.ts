@@ -1,5 +1,5 @@
-import type { Country, CurrencyInfo } from './types';
-import type { RawCountry } from './schemas';
+import type { Country, CurrencyInfo } from './types.ts';
+import type { RawCountry } from '../api/schemas';
 
 /**
  * Преобразует сырой ответ countries.dev в данные для отображения в UI.

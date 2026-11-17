@@ -1,4 +1,4 @@
-import { HttpError } from './http-error.ts';
+import { HttpError } from '../api/http-error.ts';
 
 /**
  * Результат классификации ошибки для контроллера.

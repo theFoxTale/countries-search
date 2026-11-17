@@ -1,9 +1,9 @@
-export { classifyError } from './classify-error.ts';
-export { debounce } from './debounce.ts';
-export { mapCountryResponse } from './map-country-response.ts';
-export { searchCountries } from './search-countries.ts';
+export { classifyError } from './lib/classify-error.ts';
+export { debounce } from './lib/debounce.ts';
+export { mapCountryResponse } from './model/map-country-response.ts';
+export { searchCountries } from './api/search-countries.ts';
 
-export { HttpError } from './http-error.ts';
+export { HttpError } from './api/http-error.ts';
 
-export type { Country, CurrencyInfo } from './types.ts';
-export type { RawCountry } from './schemas';
+export type { Country, CurrencyInfo } from './model/types.ts';
+export type { RawCountry } from './api/schemas';
