@@ -8,4 +8,16 @@
  *   err.name                  // 'HttpError'
  *   err.status                // 500
  */
-export class HttpError extends Error {}
+export class HttpError extends Error {
+  public readonly status: number; // HTTP-статус ответа (4xx/5xx, кроме 404).
+  public readonly url?: string; // URL, на который был сделан запрос.
+
+  constructor(status: number, url?: string) {
+    const errorMessage = `HTTP ${String(status)}${url ? ` for ${url}` : ''}`;
+    super(errorMessage);
+
+    this.name = 'HttpError';
+    this.status = status;
+    this.url = url;
+  }
+}
