@@ -1,0 +1,22 @@
+.app {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.app__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+  height: 100%;
+}
+
+/* Адаптивность */
+@media (max-width: 480px) {
+  .app {
+    padding: var(--space-2);
+  }
+}

@@ -1,0 +1,11 @@
+.hint {
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.hint__text {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 1rem;
+  user-select: none;
+}
