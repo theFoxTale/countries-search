@@ -193,5 +193,16 @@ describe('searchCountries', () => {
 
       await expect(searchCountries('spain', ac.signal)).rejects.toBe(typeError);
     });
+
+    it('200 + невалидная форма (не массив) вызывает Error, не HttpError', async () => {
+      vi.stubGlobal('fetch', fetchOk({ some: 'object' }));
+      await expect(searchCountries('x', ac.signal)).rejects.toBeInstanceOf(Error);
+      await expect(searchCountries('x', ac.signal)).rejects.not.toBeInstanceOf(HttpError);
+    });
+
+    it('200 + элемент без name вызывает Error, не HttpError', async () => {
+      vi.stubGlobal('fetch', fetchOk([{ capital: 'Madrid' }]));
+      await expect(searchCountries('x', ac.signal)).rejects.toBeInstanceOf(Error);
+    });
   });
 });
