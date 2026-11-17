@@ -1,4 +1,5 @@
-import type { Country, CurrencyInfo, RawCountry } from './types';
+import type { Country, CurrencyInfo } from './types';
+import type { RawCountry } from './schemas';
 
 /**
  * Преобразует сырой ответ countries.dev в данные для отображения в UI.
