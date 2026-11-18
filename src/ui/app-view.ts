@@ -1,12 +1,20 @@
 import { createElement } from './dom';
-import { createAppHeader, createSearchInput, createHistoryChips, createStatusView } from './components';
+import {
+  createAppHeader,
+  createSearchInput,
+  createHistoryChips,
+  createStatusView,
+  createResultsView,
+} from './components';
 import type { ViewState } from './view-state.ts';
+import type { Country } from '@core';
 
 export type AppViewHandlers = {
   onQueryChange: (query: string) => void;
   onQueryClear: () => void;
   onHistoryPick: (query: string) => void;
   onRetry: () => void;
+  onCountryPick: (country: Country) => void;
 };
 
 export type AppView = {
@@ -29,6 +37,7 @@ export function createAppView(
   });
 
   const status = createStatusView({ onRetry: handlers.onRetry });
+  const results = createResultsView({ onCountryPick: handlers.onCountryPick });
 
   const history = createHistoryChips({
     items: initialHistory,
@@ -41,7 +50,7 @@ export function createAppView(
   const content = createElement({
     tag: 'main',
     classes: ['app__content'],
-    children: [search.root, status.root, history.root],
+    children: [search.root, status.root, results.root, history.root],
   });
 
   root.append(header.root, content);
@@ -50,6 +59,9 @@ export function createAppView(
     setQuery: search.setValue,
     focusSearch: search.focus,
     updateHistory: history.update,
-    render: status.render,
+    render: (state) => {
+      status.render(state);
+      results.render(state);
+    },
   };
 }

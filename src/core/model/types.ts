@@ -27,11 +27,4 @@ export type CurrencyInfo = {
 };
 
 // Краткая информация (карточка в результатах поиска)
-export type CountryCard = {
-  name: string;
-  flag: string;
-  capital: string;
-  region: string;
-  population: number;
-  languages: string[];
-};
+export type CountryCard = Pick<Country, 'name' | 'flag' | 'flagPng' | 'capital' | 'region' | 'population'>;

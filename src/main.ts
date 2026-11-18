@@ -1,8 +1,7 @@
 import './styles/index.css';
-import { createAppView } from './ui';
+import { createAppView, createDiv } from './ui';
 import type { AppViewHandlers, ViewState } from './ui';
-import { debounce, searchCountries } from '@core';
-import { createDiv } from './ui/dom';
+import { type Country, debounce, searchCountries } from '@core';
 
 const INITIAL_HISTORY = ['France', 'Japan', 'Brazil'] as const;
 const SEARCH_DELAY_MS = 300;
@@ -79,6 +78,9 @@ function createSearchHandlers(render: (state: ViewState) => void): AppViewHandle
     },
     onRetry(): void {
       controller.retry();
+    },
+    onCountryPick(country: Country): void {
+      render({ status: 'detail', country });
     },
   };
 }
