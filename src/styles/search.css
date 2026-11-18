@@ -19,7 +19,7 @@
   color: var(--text);
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: var(--radius-m);
   box-shadow: var(--shadow);
   transition:
     border-color 0.15s ease,

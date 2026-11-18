@@ -1,17 +1,12 @@
 import { createElement } from './dom';
-import {
-  createAppHeader,
-  createSearchInput,
-  createHint,
-  createHistoryChips,
-  createLoadingIndicator,
-} from './components';
+import { createAppHeader, createSearchInput, createHistoryChips, createStatusView } from './components';
 import type { ViewState } from './view-state.ts';
 
 export type AppViewHandlers = {
   onQueryChange: (query: string) => void;
   onQueryClear: () => void;
   onHistoryPick: (query: string) => void;
+  onRetry: () => void;
 };
 
 export type AppView = {
@@ -27,11 +22,14 @@ export function createAppView(
   initialHistory: readonly string[],
 ): AppView {
   const header = createAppHeader();
+
   const search = createSearchInput({
     onInput: handlers.onQueryChange,
     onClear: handlers.onQueryClear,
   });
-  const hint = createHint();
+
+  const status = createStatusView({ onRetry: handlers.onRetry });
+
   const history = createHistoryChips({
     items: initialHistory,
     onPick: (query) => {
@@ -40,17 +38,10 @@ export function createAppView(
     },
   });
 
-  // Состояние приложения
-  const status = createElement({
-    tag: 'div',
-    classes: ['status'],
-    attrs: { hidden: true },
-  });
-
   const content = createElement({
     tag: 'main',
     classes: ['app__content'],
-    children: [search.root, hint.root, status, history.root],
+    children: [search.root, status.root, history.root],
   });
 
   root.append(header.root, content);
@@ -59,23 +50,6 @@ export function createAppView(
     setQuery: search.setValue,
     focusSearch: search.focus,
     updateHistory: history.update,
-    render: (state) => {
-      renderView(state, hint.root, status);
-    },
+    render: status.render,
   };
-}
-
-function renderView(state: ViewState, hintElement: HTMLElement, statusElement: HTMLElement): void {
-  // Сбрасываем состояния по умолчанию
-  hintElement.hidden = true;
-  statusElement.hidden = true;
-  statusElement.replaceChildren();
-
-  // Применяем состояние
-  if (state.status === 'idle') {
-    hintElement.hidden = false;
-  } else if (state.status === 'loading') {
-    statusElement.hidden = false;
-    statusElement.append(createLoadingIndicator());
-  }
 }

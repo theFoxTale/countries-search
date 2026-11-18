@@ -1,4 +1,4 @@
-import { createElement } from '../dom';
+import { createElement } from '../../dom';
 
 export function createLoadingIndicator(): HTMLElement {
   return createElement({

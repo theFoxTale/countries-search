@@ -7,30 +7,56 @@ import { createDiv } from './ui/dom';
 const INITIAL_HISTORY = ['France', 'Japan', 'Brazil'] as const;
 const SEARCH_DELAY_MS = 300;
 
-function createSearchHandlers(render: (state: ViewState) => void): AppViewHandlers {
-  let currentRequest: AbortController | null = null;
+type SearchController = {
+  run: (query: string) => Promise<void>;
+  cancel: () => void;
+  retry: () => void;
+};
 
-  async function runSearch(query: string): Promise<void> {
+function createSearchController(render: (state: ViewState) => void): SearchController {
+  let currentRequest: AbortController | null = null;
+  let lastQuery = '';
+
+  async function run(query: string): Promise<void> {
     currentRequest?.abort();
     currentRequest = new AbortController();
+    lastQuery = query;
     render({ status: 'loading' });
     try {
-      await searchCountries(query, currentRequest.signal);
-      render({ status: 'idle' });
+      const countries = await searchCountries(query, currentRequest.signal);
+      if (countries.length === 0) {
+        render({ status: 'empty', query });
+        return;
+      }
+      render({ status: 'results', countries });
     } catch (error) {
       if (error instanceof DOMException && error.name === 'AbortError') return;
-      render({ status: 'idle' });
+      render({ status: 'error', message: 'Не удалось загрузить результаты', query });
     }
   }
 
+  return {
+    run,
+    cancel(): void {
+      currentRequest?.abort();
+      currentRequest = null;
+    },
+    retry(): void {
+      if (lastQuery) void run(lastQuery);
+    },
+  };
+}
+
+function createSearchHandlers(render: (state: ViewState) => void): AppViewHandlers {
+  const controller = createSearchController(render);
+
   const debouncedSearch = debounce((query: string) => {
-    if (query.trim()) void runSearch(query);
+    if (query.trim()) void controller.run(query);
   }, SEARCH_DELAY_MS);
 
   function cancelPending(): void {
-    currentRequest?.abort();
-    currentRequest = null;
-    debouncedSearch('');
+    controller.cancel();
+    debouncedSearch.cancel();
   }
 
   return {
@@ -48,8 +74,11 @@ function createSearchHandlers(render: (state: ViewState) => void): AppViewHandle
       render({ status: 'idle' });
     },
     onHistoryPick(query: string): void {
-      debouncedSearch('');
-      void runSearch(query);
+      debouncedSearch.cancel();
+      void controller.run(query);
+    },
+    onRetry(): void {
+      controller.retry();
     },
   };
 }
@@ -66,6 +95,7 @@ function initApp(): void {
   }
 
   const appView = createAppView(appRoot, createSearchHandlers(render), INITIAL_HISTORY);
+  appView.render({ status: 'idle' });
   appView.focusSearch();
 }
 
