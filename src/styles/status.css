@@ -1,0 +1,37 @@
+.status__container {
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.status__text {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 1rem;
+  user-select: none;
+}
+
+.status__button {
+  cursor: pointer;
+
+  padding: 0.5rem 1rem;
+  margin-top: 16px;
+
+  font-size: 1rem;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+
+  border-radius: var(--radius-l);
+  transition:
+    color 0.5s ease,
+    background-color 0.5s ease;
+}
+
+.status__button:hover {
+  background-color: var(--accent);
+  color: var(--surface);
+}
+
+.empty__query {
+  font-weight: 600;
+}

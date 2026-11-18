@@ -1,0 +1,96 @@
+.icon-button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+  outline: none;
+}
+
+.icon-button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Увеличиваем область для клика (для удобства) */
+.icon-button--theme {
+  padding: 4px;
+  margin: -4px;
+}
+
+.icon-button--switch {
+  padding: 6px;
+  margin: -6px;
+}
+
+.icon-button--clear {
+  padding: 6px;
+  margin: -6px;
+}
+
+/* Базовый класс иконки */
+.icon {
+  display: inline-block;
+  background-color: var(--text-muted);
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+  transition: background-color 0.3s ease;
+}
+
+.icon-button:hover .icon {
+  background-color: var(--accent);
+}
+
+.icon--sun {
+  width: 1.5em;
+  height: 1.5em;
+  --icon: url('../assets/icons/sun.svg');
+}
+
+.icon--moon {
+  width: 1.5em;
+  height: 1.5em;
+  --icon: url('../assets/icons/moon.svg');
+}
+
+.icon--switch {
+  width: 2em;
+  height: 2em;
+  --icon: url('../assets/icons/switch.svg');
+}
+
+.icon--search {
+  width: 1.5em;
+  height: 1.5em;
+  --icon: url('../assets/icons/search.svg');
+}
+
+.icon--clear {
+  width: 1.7em;
+  height: 1.7em;
+  --icon: url('../assets/icons/clear.svg');
+}
+
+.icon--back {
+  width: 1.3em;
+  height: 1.3em;
+  --icon: url('../assets/icons/back.svg');
+}
+
+.icon--text {
+  user-select: none;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.icon--text_active {
+  color: var(--accent);
+}

@@ -1,0 +1,13 @@
+@import './base.css';
+
+@import './app.css';
+@import './header.css';
+@import './history.css';
+
+@import './icons.css';
+
+@import './detail.css';
+@import './loading.css';
+@import './results.css';
+@import './search.css';
+@import './status.css';
