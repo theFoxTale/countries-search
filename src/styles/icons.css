@@ -51,31 +51,31 @@
 .icon--sun {
   width: 1.5em;
   height: 1.5em;
-  --icon: url('../assets/svg/sun.svg');
+  --icon: url('../assets/icons/sun.svg');
 }
 
 .icon--moon {
   width: 1.5em;
   height: 1.5em;
-  --icon: url('../assets/svg/moon.svg');
+  --icon: url('../assets/icons/moon.svg');
 }
 
 .icon--switch {
   width: 2em;
   height: 2em;
-  --icon: url('../assets/svg/switch.svg');
+  --icon: url('../assets/icons/switch.svg');
 }
 
 .icon--search {
   width: 1.5em;
   height: 1.5em;
-  --icon: url('../assets/svg/search.svg');
+  --icon: url('../assets/icons/search.svg');
 }
 
 .icon--clear {
   width: 1.7em;
   height: 1.7em;
-  --icon: url('../assets/svg/clear.svg');
+  --icon: url('../assets/icons/clear.svg');
 }
 
 .icon--text {

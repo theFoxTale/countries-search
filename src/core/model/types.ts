@@ -1,6 +1,8 @@
 /**
  * Данные о стране, подготовленные для отображения в UI.
  */
+
+// Подробное описание страны (модальное окно)
 export type Country = {
   name: string;
   nativeName: string | null;
@@ -22,4 +24,14 @@ export type CurrencyInfo = {
   code: string;
   name: string;
   symbol: string | null;
+};
+
+// Краткая информация (карточка в результатах поиска)
+export type CountryCard = {
+  name: string;
+  flag: string;
+  capital: string;
+  region: string;
+  population: number;
+  languages: string[];
 };

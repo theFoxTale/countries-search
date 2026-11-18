@@ -5,5 +5,5 @@ export { searchCountries } from './api/search-countries.ts';
 
 export { HttpError } from './api/http-error.ts';
 
-export type { Country, CurrencyInfo } from './model/types.ts';
+export type { Country, CurrencyInfo, CountryCard } from './model/types.ts';
 export type { RawCountry } from './api/schemas';
