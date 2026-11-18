@@ -1,7 +1,7 @@
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
-  base: '/country-search/',
+  base: '/countries-search/',
   resolve: {
     alias: {
       '@core': new URL('src/core', import.meta.url).pathname,
