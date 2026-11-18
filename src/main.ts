@@ -12,6 +12,11 @@ type SearchController = {
   retry: () => void;
 };
 
+type Navigation = {
+  render: (state: ViewState) => void;
+  back: () => void;
+};
+
 function createSearchController(render: (state: ViewState) => void): SearchController {
   let currentRequest: AbortController | null = null;
   let lastQuery = '';
@@ -46,8 +51,29 @@ function createSearchController(render: (state: ViewState) => void): SearchContr
   };
 }
 
+function createNavigation(render: (state: ViewState) => void): Navigation {
+  let lastResults: Country[] | null = null;
+
+  return {
+    render(state: ViewState): void {
+      if (state.status === 'results') {
+        lastResults = state.countries;
+      }
+      render(state);
+    },
+    back(): void {
+      if (lastResults) {
+        render({ status: 'results', countries: lastResults });
+        return;
+      }
+      render({ status: 'idle' });
+    },
+  };
+}
+
 function createSearchHandlers(render: (state: ViewState) => void): AppViewHandlers {
-  const controller = createSearchController(render);
+  const navigation = createNavigation(render);
+  const controller = createSearchController(navigation.render);
 
   const debouncedSearch = debounce((query: string) => {
     if (query.trim()) void controller.run(query);
@@ -76,12 +102,11 @@ function createSearchHandlers(render: (state: ViewState) => void): AppViewHandle
       debouncedSearch.cancel();
       void controller.run(query);
     },
-    onRetry(): void {
-      controller.retry();
-    },
+    onRetry: controller.retry,
     onCountryPick(country: Country): void {
       render({ status: 'detail', country });
     },
+    onBack: navigation.back,
   };
 }
 

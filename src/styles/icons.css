@@ -78,6 +78,12 @@
   --icon: url('../assets/icons/clear.svg');
 }
 
+.icon--back {
+  width: 1.3em;
+  height: 1.3em;
+  --icon: url('../assets/icons/back.svg');
+}
+
 .icon--text {
   user-select: none;
   font-weight: 700;

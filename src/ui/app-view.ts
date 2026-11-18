@@ -15,6 +15,7 @@ export type AppViewHandlers = {
   onHistoryPick: (query: string) => void;
   onRetry: () => void;
   onCountryPick: (country: Country) => void;
+  onBack: () => void;
 };
 
 export type AppView = {
@@ -37,7 +38,10 @@ export function createAppView(
   });
 
   const status = createStatusView({ onRetry: handlers.onRetry });
-  const results = createResultsView({ onCountryPick: handlers.onCountryPick });
+  const results = createResultsView({
+    onCountryPick: handlers.onCountryPick,
+    onBack: handlers.onBack,
+  });
 
   const history = createHistoryChips({
     items: initialHistory,
