@@ -11,13 +11,25 @@
 export function debounce<Arguments extends unknown[]>(
   fn: (...arguments_: Arguments) => void,
   delay: number,
-): (...arguments_: Arguments) => void {
+): ((...arguments_: Arguments) => void) & { cancel: () => void } {
   let timerId: ReturnType<typeof setTimeout> | undefined;
 
-  return (...arguments_: Arguments) => {
+  const debounced = (...arguments_: Arguments) => {
     if (timerId !== undefined) clearTimeout(timerId);
     timerId = setTimeout(() => {
       fn(...arguments_);
     }, delay);
   };
+
+  // Метод отмены таймера без перезапуска
+  debounced.cancel = () => {
+    if (timerId === undefined) {
+      return;
+    }
+
+    clearTimeout(timerId);
+    timerId = undefined;
+  };
+
+  return debounced;
 }

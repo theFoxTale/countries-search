@@ -130,6 +130,19 @@ describe('debounce', () => {
       vi.advanceTimersByTime(50);
       expect(fn1).toHaveBeenCalledTimes(1);
     });
+
+    it('метод cancel предотвращает вызов fn', () => {
+      const fn = vi.fn();
+      const debounced = debounce(fn, 100);
+
+      debounced('test');
+      vi.advanceTimersByTime(50);
+
+      debounced.cancel();
+
+      vi.advanceTimersByTime(50);
+      expect(fn).not.toHaveBeenCalled();
+    });
   });
 
   // ============================================================
